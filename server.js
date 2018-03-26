@@ -8,6 +8,10 @@ if(!port){
   process.exit(1)
 }
 
+let sessions ={
+
+}
+
 var server = http.createServer(function(request, response){
   var parsedUrl = url.parse(request.url, true)
   var pathWithQuery = request.url 
@@ -30,7 +34,10 @@ var server = http.createServer(function(request, response){
     //       users=[]
     //   }
       console.log(request.headers.cookie)
-      let cookies = request.headers.cookie.split('; ')  //把不同的用户分隔开['email=1@tsl.com','a=1','b=2']
+      let cookies=''
+      if(request.headers.cookie){
+      cookies = request.headers.cookie.split('; ')  //把不同的用户分隔开['email=1@tsl.com','a=1','b=2']      
+      }
       let hash ={}
       for(let i=0;i<cookies.length;i++){
           let parts=cookies[i].split('=')
@@ -39,7 +46,12 @@ var server = http.createServer(function(request, response){
           hash[key]=value
       }
       console.log(hash)
-      let email = hash.sign_in_email
+      let mySession = sessions[hash.sessionId]
+      let email
+      if(mySession){
+       email = mySession.sign_in_email 
+      }
+      
       let users = fs.readFileSync('./db/users','utf8')
       users=JSON.parse(users)
       let foundUser
@@ -183,7 +195,10 @@ var server = http.createServer(function(request, response){
             }           
         }
         if(found){
-            response.setHeader('Set-Cookie',`sign_in_email=${email};HttpOnly`)  //设置cookie
+            let sessionId=Math.random()*100000  //随机数
+            sessions[sessionId]={sign_in_email:email}
+            // response.setHeader('Set-Cookie',`sign_in_email=${email};HttpOnly`)  //设置cookie
+            response.setHeader('Set-Cookie',`sessionId=${sessionId}`)
             response.statusCode=200
         }else{
             response.statusCode=401
