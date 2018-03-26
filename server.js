@@ -33,25 +33,29 @@ var server = http.createServer(function(request, response){
     //   }catch{
     //       users=[]
     //   }
-      console.log(request.headers.cookie)
-      let cookies=''
-      if(request.headers.cookie){
-      cookies = request.headers.cookie.split('; ')  //把不同的用户分隔开['email=1@tsl.com','a=1','b=2']      
-      }
-      let hash ={}
-      for(let i=0;i<cookies.length;i++){
-          let parts=cookies[i].split('=')
-          let key =parts[0]
-          let value = parts[1]
-          hash[key]=value
-      }
-      console.log(hash)
-      let mySession = sessions[hash.sessionId]
+    //   console.log(request.headers.cookie)
+    ///////////////////////////////////////////////////////
+    //   let cookies=''
+    //   if(request.headers.cookie){
+    //   cookies = request.headers.cookie.split('; ')  //把不同的用户分隔开['email=1@tsl.com','a=1','b=2']      
+    //   }
+    //   let hash ={}
+    //   for(let i=0;i<cookies.length;i++){
+    //       let parts=cookies[i].split('=')
+    //       let key =parts[0]
+    //       let value = parts[1]
+    //       hash[key]=value
+    //   }
+      ///////////////////////////////////////
+    //   console.log(hash)
+
+    //   let mySession = sessions[hash.sessionId]
+    let mySession = sessions[query.sessionId]   //查询参数
       let email
       if(mySession){
        email = mySession.sign_in_email 
       }
-      
+
       let users = fs.readFileSync('./db/users','utf8')
       users=JSON.parse(users)
       let foundUser
@@ -198,7 +202,8 @@ var server = http.createServer(function(request, response){
             let sessionId=Math.random()*100000  //随机数
             sessions[sessionId]={sign_in_email:email}
             // response.setHeader('Set-Cookie',`sign_in_email=${email};HttpOnly`)  //设置cookie
-            response.setHeader('Set-Cookie',`sessionId=${sessionId}`)
+            // response.setHeader('Set-Cookie',`sessionId=${sessionId}`)
+            response.write(`{"sessionId":${sessionId}}`)
             response.statusCode=200
         }else{
             response.statusCode=401

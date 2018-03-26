@@ -11,14 +11,22 @@
         你的密码是:__password__      <!-- 占个位 --> 
     </h1> 
     <script>
-        let a=localStorage.getItem('a')
-        if(!a){
-            a=0
+        // let a=localStorage.getItem('a')
+        // if(!a){
+        //     a=0
+        // }else{
+        //     a=(+a)+1   //字符串变成数字
+        // }
+        // console.log(a)
+        // localStorage.setItem('a',a)    
+        let already=localStorage.getItem('已经提示')   
+        if(!already){
+            alert('你好，我们的网站已经改版了')
+            localStorage.setItem('已经提示',true)                 
         }else{
-            a=(+a)+1   //字符串变成数字
+            
         }
-        console.log(a)
-        localStorage.setItem('a',a)            
+   
         
     </script>  
 </body>    
