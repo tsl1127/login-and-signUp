@@ -24,8 +24,20 @@ var server = http.createServer(function(request, response){
   /******** 从这里开始看，上面不要看 ************/
 
   console.log('含查询字符串的路径\n' + pathWithQuery)
-
-  if(path === '/'){
+if(path === '/js/main.js'){
+    let string=fs.readFileSync('./js/main.js','utf8')
+    response.setHeader('Content-Type','application/javascript;charset=utf8')
+    response.setHeader('Cache-Control','max-age=30')
+    response.write(string)
+    response.end()
+}else if(path === '/css/default.css'){
+    let string = fs.readFileSync('./css/default.css','utf8')
+    response.setHeader('Content-Type','text/css;charset=utf8')
+    response.setHeader('Cache-Control','max-age=30')    
+    response.write(string)
+    response.end()
+}
+else if(path === '/'){
       let string = fs.readFileSync('./index.html','utf8')
     //   var users=fs.readFileSync('./db/users','utf8')
     //   try{
@@ -77,7 +89,8 @@ var server = http.createServer(function(request, response){
     response.setHeader('Content-Type', 'text/html;charset=utf-8')
     response.write(string)
     response.end()
-  }else if(path==='/sign_up'&& method==='GET'){
+  }
+  else if(path==='/sign_up'&& method==='GET'){
     let string = fs.readFileSync('./sign_up.html','utf8')    
     response.statusCode = 200
     response.setHeader('Content-Type','text/html;charset=utf-8')    

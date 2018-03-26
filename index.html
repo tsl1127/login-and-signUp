@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hans">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>首页</title>
+    <link rel="stylesheet" href="./css/default.css">
 </head>
 <body>
     <h1>
         你的密码是:__password__      <!-- 占个位 --> 
     </h1> 
-    <script>
+    <script src="./js/main.js">
         // let a=localStorage.getItem('a')
         // if(!a){
         //     a=0
@@ -18,16 +17,24 @@
         //     a=(+a)+1   //字符串变成数字
         // }
         // console.log(a)
-        // localStorage.setItem('a',a)    
-        let already=localStorage.getItem('已经提示')   
-        if(!already){
-            alert('你好，我们的网站已经改版了')
-            localStorage.setItem('已经提示',true)                 
-        }else{
-            
-        }
-   
-        
+        // localStorage.setItem('a',a)  
+        /////////////////////////////////////////////////////////////  
+        // let already=localStorage.getItem('已经提示')   
+        // if(!already){
+        //     alert('你好，我们的网站已经改版了')
+        //     localStorage.setItem('已经提示',true)                 
+        // }else{
+
+        // }
+        /////////////////////////////////////////////////////////
+        // let s=''
+        // for(let i=0;i<10000;i++){
+        //     s+='一二三四五六七八'
+        // }
+        // console.log(s.length)
+        // localStorage.setItem('xxx',s)
+        //////////////////////////////////////////////////
+
     </script>  
 </body>    
 </html>
